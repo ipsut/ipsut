@@ -56,6 +56,12 @@ def list_event():
     return render_template('eventList.html', events=events)
 
 #Scan Routes 
+@app.route('/scans')
+def list_scans():
+    scans = Scan.select()
+    print(scans)
+    return render_template('scanList.html', scans=scans)
+
 @app.route('/s/<uuid>')
 def scan(uuid):
     sheet = Sheet.get(uuid=uuid)
