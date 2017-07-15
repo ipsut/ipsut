@@ -52,7 +52,8 @@ class SheetForm(FlaskForm):
 #Event Routes 
 @app.route('/events')
 def list_event():
-    return render_template('eventList.html')
+    events = Sheet.select(Sheet.event).distinct()
+    return render_template('eventList.html', events=events)
 
 #Scan Routes 
 @app.route('/s/<uuid>')
