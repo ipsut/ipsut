@@ -72,6 +72,12 @@ def scan(uuid):
 
 #Sheet Routes 
 
+@app.route('/sheets')
+def list_sheets():
+    sheets = Sheet.select()
+    print(sheets.count())
+    return render_template('sheetList.html', sheets=sheets)
+
 
 @app.route('/create_sheet', methods=('GET', 'POST'))
 def create_sheet():
