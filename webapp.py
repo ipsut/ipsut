@@ -35,7 +35,11 @@ class Sheet(db.Model):
     event = TextField()
     uuid = TextField()
 
-
+class Scan(db.Model):
+    sheet = ForeignKeyField(Sheet)
+    event = TextField()
+    event = TextField()
+    
 #Forms
 class SheetForm(FlaskForm):
     name = StringField('title', validators=[DataRequired()])
@@ -44,7 +48,20 @@ class SheetForm(FlaskForm):
 
 
 
-#Route 
+
+#Event Routes 
+@app.route('/events')
+def list_event():
+    return render_template('eventList.html')
+
+#Checkin Routes 
+@app.route('/s/<uuid>')
+def checkin(uuid):
+    return "uuid"
+
+#Sheet Routes 
+
+
 @app.route('/create_sheet', methods=('GET', 'POST'))
 def create_sheet():
     form = SheetForm()
@@ -74,5 +91,6 @@ def view_sheet(uuid):
  
 if __name__ == '__main__':
     Sheet.create_table(fail_silently=True)
+    Scan.create_table(fail_silently=True)
     app.run(debug=True)
 
