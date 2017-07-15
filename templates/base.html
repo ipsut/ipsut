@@ -23,6 +23,27 @@
     {% endblock %}
 </head>
 <body>
+    {% block sidebar %}
+		
+		<!-- Sidebar -->
+			<section id="sidebar">
+				<div class="inner">
+					<span id="title">
+						<h1>Ipsut</h1>
+					</span>
+					<nav>
+						<ul>
+							<li><a href="/">Home</a></li>
+							<li><a href="/events">Events</a></li>
+							<li><a href="/create_sheet">Who we are</a></li>
+						</ul>
+					</nav>
+				</div>
+			</section>
+    {% endblock %}
+
+	<div id="wrapper">
+
     {% block content %}
 
     {% endblock %}
@@ -38,7 +59,7 @@
 		</div>
 	</footer>
     {% endblock %}
-
+	</div>
 <!-- Scripts -->
 	<script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='assets/js/jquery.scrollex.min.js') }}"></script>

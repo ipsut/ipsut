@@ -1,5 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+
 <h1>{{sheet.title}}</h1>
 <p>{{sheet.description}}</p>
 <p>{{sheet.event}}</p>
 <p>{{sheet.url}}</p>
 <p><img src="{{ qrcode(sheet.url) }}"></p>
+{% endblock %}
