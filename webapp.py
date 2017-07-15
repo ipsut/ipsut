@@ -12,7 +12,7 @@ import shortuuid
 
 
 DEBUG = True
-BASE_URL = 'localhost:5000'
+BASE_URL = 'http://127.0.0.1:5000'
 SECRET_KEY = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 DATABASE = {
@@ -37,8 +37,8 @@ class Sheet(db.Model):
 
 class Scan(db.Model):
     sheet = ForeignKeyField(Sheet)
-    event = TextField()
-    event = TextField()
+
+
     
 #Forms
 class SheetForm(FlaskForm):
@@ -54,10 +54,14 @@ class SheetForm(FlaskForm):
 def list_event():
     return render_template('eventList.html')
 
-#Checkin Routes 
+#Scan Routes 
 @app.route('/s/<uuid>')
-def checkin(uuid):
-    return "uuid"
+def scan(uuid):
+    sheet = Sheet.get(uuid=uuid)
+    scan = Scan()
+    scan.sheet = sheet
+    scan.save()
+    return "Thanks for checking in"
 
 #Sheet Routes 
 
