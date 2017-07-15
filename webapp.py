@@ -12,7 +12,7 @@ import shortuuid
 
 
 DEBUG = True
-BASE_URL = 'https://ipsut.net'
+BASE_URL = 'localhost:5000'
 SECRET_KEY = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 DATABASE = {
