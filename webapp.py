@@ -1,12 +1,18 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField
 from wtforms.validators import DataRequired
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, make_response
 from flask_wtf.csrf import CSRFProtect
-from flask_peewee.db import Database
+
 from flask import Flask
 from flask.ext.qrcode import QRcode
 from peewee import *
+
+from flask_peewee.db import Database
+
+
+
+
 
 import shortuuid
 
@@ -28,6 +34,8 @@ qrcode = QRcode(app)
 db = Database(app)
 
 
+
+
 #Models
 class Sheet(db.Model):
     name = TextField()
@@ -37,6 +45,8 @@ class Sheet(db.Model):
 
 class Scan(db.Model):
     sheet = ForeignKeyField(Sheet)
+    username = TextField()
+
 
 
     
@@ -48,6 +58,21 @@ class SheetForm(FlaskForm):
 
 
 
+class SigninForm(FlaskForm):
+    name = StringField('name', validators=[DataRequired()])
+    password = StringField('password', validators=[DataRequired()])
+
+
+#User Routes
+@app.route('/signin', methods=('GET', 'POST'))
+def signin():
+    form = SigninForm()
+    if form.validate_on_submit():
+        resp = make_response(redirect(url_for('create_sheet')))
+        print(form.name.data)
+        resp.set_cookie('username', form.name.data)
+        return resp
+    return render_template('signin.html', form=form)
 
 #Event Routes 
 @app.route('/events')
@@ -67,6 +92,7 @@ def scan(uuid):
     sheet = Sheet.get(uuid=uuid)
     scan = Scan()
     scan.sheet = sheet
+    scan.username = request.cookies.get('username')
     scan.save()
     return "Thanks for checking in"
 
@@ -82,6 +108,7 @@ def list_sheets():
 @app.route('/create_sheet', methods=('GET', 'POST'))
 def create_sheet():
     form = SheetForm()
+    username = request.cookies.get('username')
     if form.validate_on_submit():
         #return  "ddd"
         sheet = Sheet()
@@ -91,7 +118,7 @@ def create_sheet():
         sheet.uuid = shortuuid.uuid()
         sheet.save()
         return redirect(url_for('view_sheet', uuid=sheet.uuid))
-    return render_template('create_sheet.html', form=form)
+    return render_template('create_sheet.html', form=form, username=username)
 
 @app.route('/sheet/<uuid>')
 def view_sheet(uuid):
@@ -107,7 +134,10 @@ def view_sheet(uuid):
 
  
 if __name__ == '__main__':
+
     Sheet.create_table(fail_silently=True)
     Scan.create_table(fail_silently=True)
+
+
     app.run(debug=True)
 
