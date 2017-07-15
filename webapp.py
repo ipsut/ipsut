@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField
 from wtforms.validators import DataRequired
-from flask import render_template
+from flask import render_template, request, redirect, url_for
 from flask_wtf.csrf import CSRFProtect
 from flask_peewee.db import Database
 from flask import Flask
@@ -32,9 +32,9 @@ db = Database(app)
 class Sheet(db.Model):
     name = TextField()
     description = TextField()
-    description = TextField()
     event = TextField()
     uuid = TextField()
+
 
 #Forms
 class SheetForm(FlaskForm):
@@ -49,21 +49,30 @@ class SheetForm(FlaskForm):
 def create_sheet():
     form = SheetForm()
     if form.validate_on_submit():
-
-        return redirect(stuff)
+        #return  "ddd"
+        sheet = Sheet()
+        sheet.name = form.name.data
+        sheet.description = form.description.data
+        sheet.event = form.event.data
+        sheet.uuid = shortuuid.uuid()
+        sheet.save()
+        return redirect(url_for('view_sheet', uuid=sheet.uuid))
     return render_template('create_sheet.html', form=form)
 
 @app.route('/sheet/<uuid>')
 def view_sheet(uuid):
-    sheet = {}
-    sheet['id'] = uuid
-    sheet['url'] = BASE_URL + "/s/" + sheet['id']
-    sheet['title'] = "Redhook"
-    sheet['description'] = 'Woodenville'
-    sheet['event'] = "SeattleBeer"
+    sheet = Sheet.get(uuid=uuid)
+    #sheet = {}
+    #sheet['id'] = uuid
+    sheet.url = BASE_URL + "/s/" + sheet.uuid
+    #sheet['title'] = "Redhook"
+    #sheet['description'] = 'Woodenville'
+    #sheet['event'] = "SeattleBeer"
     return render_template('view_sheet.html', sheet=sheet) 
 
 
  
 if __name__ == '__main__':
+    Sheet.create_table(fail_silently=True)
     app.run(debug=True)
+
