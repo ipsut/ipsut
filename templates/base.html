@@ -62,7 +62,18 @@
 			</div>
 		</footer>
     {% endblock %}
+    <div id="authed">
+    {% if request.cookies.get('username') == None %}
+    	
+    		<a href="/signin"><button value="Sign In">Sign In</button></a>
+	{% else %}
+    		<a href="/user/{{ request.cookies.get('username') }}"><button value="Sign In">Hey {{ request.cookies.get('username') }}</button></a>
+
+	{% endif %}
+    	</div>
+
 	</div>
+	
 <!-- Scripts -->
 	<script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='assets/js/jquery.scrollex.min.js') }}"></script>
