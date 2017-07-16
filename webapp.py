@@ -11,7 +11,6 @@ import shortuuid
 from flask_peewee.db import Database
 import random
 import datetime
-import requests
 
 
 expire_date = datetime.datetime.now()
@@ -46,8 +45,8 @@ class Sheet(db.Model):
     description = TextField()
     event = TextField()
     uuid = TextField()
-    lat = TextField()
-    lon = TextField()
+    lat = TextField(null = True)
+    lon = TextField(null = True)
 
 
 class Scan(db.Model):
@@ -60,10 +59,11 @@ class Scan(db.Model):
     
 #Forms
 class SheetForm(FlaskForm):
-    name = StringField('title', validators=[DataRequired()])
-    description = StringField('description', validators=[DataRequired()])
-    event = StringField('event', validators=[DataRequired()])
-
+    name = StringField('Title', validators=[DataRequired()])
+    description = StringField('Description', validators=[DataRequired()])
+    event = StringField('Event', validators=[DataRequired()])
+    lat = StringField('Lattitude')
+    lon = StringField('Longitude')
 
 
 class SigninForm(FlaskForm):
@@ -183,6 +183,8 @@ def create_sheet():
         sheet.description = form.description.data
         sheet.event = form.event.data
         sheet.uuid = shortuuid.uuid()
+        sheet.lat = form.lat.data
+        sheet.lon = form.lon.data
         sheet.save()
         return redirect(url_for('view_sheet', uuid=sheet.uuid))
     return render_template('create_sheet.html', form=form, username=username)
@@ -196,9 +198,8 @@ def view_sheet(uuid):
     #sheet['title'] = "Redhook"
     #sheet['description'] = 'Woodenville'
     #sheet['event'] = "SeattleBeer"
-    req = "https://image.maps.cit.api.here.com/mia/1.6/mapview?app_id="+HERE_ID+"&app_code="+HERE_CODE+"&c=52.431,13.3845&z=16"
-    resp = requests.post(req)
-    return render_template('view_sheet.html', sheet=sheet, HERE_CODE=HERE_CODE, HERE_ID=HERE_ID, resp=resp, req=req) 
+    req = "https://image.maps.cit.api.here.com/mia/1.6/mapview?app_id="+HERE_ID+"&app_code="+HERE_CODE+"&c="+sheet.lon+","+sheet.lat+"&z=15"
+    return render_template('view_sheet.html', sheet=sheet, HERE_CODE=HERE_CODE, HERE_ID=HERE_ID, req=req) 
 
 
 #Simulator Route

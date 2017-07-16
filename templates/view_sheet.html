@@ -3,13 +3,20 @@
 {% block content %}
 
 <h2>{{sheet.name}}</h2>
-<p>{{sheet.description}}</p>
-<p>{{sheet.event}}</p>
-<p>{{sheet.url}}</p>
-<p>{{sheet.lat}}</p>
-<p>{{sheet.lon}}</p>
-<img src="https://image.maps.cit.api.here.com/mia/1.6/mapview?app_id={{HERE_ID}}&app_code={{HERE_CODE}}&c=52.431,13.3845&z=16"></img>
-<p>{{req}}</p>
-{{resp}}
-<p><img src="{{ qrcode(sheet.url) }}"></p>
+{% if request.cookies.get('username') == "admin" %}
+<div id="adminOnly">
+	<h3>Secret Admin Info</h3>
+	<p>Secret URL: {{sheet.url}}</p>
+	<p><img src="{{ qrcode(sheet.url) }}"></p>
+</div>
+{% endif %}
+<div id="sheetInfo">
+	<p>{{sheet.description}}</p>
+	<p>{{sheet.event}}</p>
+	<p>Longitude: {{sheet.lon}}, Lattitude {{sheet.lat}}</p>
+	<p></p>
+</div>
+<img id="map" src="{{ req }}"></img>
+
+
 {% endblock %}
