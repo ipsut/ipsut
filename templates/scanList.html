@@ -2,16 +2,18 @@
 
 {% block content %}
 <h2>All Sheets</h2>
+
 <table>
 <thead><tr><th>User Name</th><th>Sheet Name</th></tr></thead>
 <tbody>
-	<tr>
+	
 
 {% for scan in scans %}
-
-    <td>{{scan.username}}</td> <td><a href="/sheet/{{scan.sheet.uuid}}">{{scan.sheet.name}}</a></td>
+    <tr>
+        <td>{{scan.username}}</td> <td><a href="/sheet/{{scan.sheet.uuid}}">{{scan.sheet.name}}</a></td>
+    </tr>
 {% endfor %}
-	</tr>
+
 </tbody>
 </table>
 {% endblock %}
