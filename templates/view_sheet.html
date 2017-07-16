@@ -6,5 +6,10 @@
 <p>{{sheet.description}}</p>
 <p>{{sheet.event}}</p>
 <p>{{sheet.url}}</p>
+<p>{{sheet.lat}}</p>
+<p>{{sheet.lon}}</p>
+<img src="https://image.maps.cit.api.here.com/mia/1.6/mapview?app_id={{HERE_ID}}&app_code={{HERE_CODE}}&c=52.431,13.3845&z=16"></img>
+<p>{{req}}</p>
+{{resp}}
 <p><img src="{{ qrcode(sheet.url) }}"></p>
 {% endblock %}

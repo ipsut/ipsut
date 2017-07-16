@@ -10,7 +10,7 @@
 
 {% for scan in scans %}
     <tr>
-        <td>{{scan.name}}</td> <td><a href="/event/{{scan.event}}">{{scan.event}}</a></td>
+        <td>{{scan.sheet.name}}</td> <td><a href="/event/{{scan.event}}">{{scan.event}}</a></td>
     </tr>
 {% endfor %}
 

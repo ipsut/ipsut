@@ -11,6 +11,7 @@ import shortuuid
 from flask_peewee.db import Database
 import random
 import datetime
+import requests
 
 
 expire_date = datetime.datetime.now()
@@ -20,6 +21,9 @@ fake = Factory.create()
 DEBUG = True
 BASE_URL = 'http://127.0.0.1:5000'
 SECRET_KEY = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
+
+HERE_ID = "RCcBqUW51xDkxDFrItrv"
+HERE_CODE = "d6CepETtb1wSZDG65ScuHQ"
 
 DATABASE = {
     'name': 'example.db',
@@ -42,6 +46,9 @@ class Sheet(db.Model):
     description = TextField()
     event = TextField()
     uuid = TextField()
+    lat = TextField()
+    lon = TextField()
+
 
 class Scan(db.Model):
     sheet = ForeignKeyField(Sheet)
@@ -158,6 +165,12 @@ def list_sheets():
     print(sheets.count())
     return render_template('sheetList.html', sheets=sheets)
 
+@app.route('/user/<username>')
+def user_scans(username):
+    scans = Scan.select().where(Scan.username == username)
+    print(scans.count())
+    return render_template('user.html', scans=scans)
+
 
 @app.route('/create_sheet', methods=('GET', 'POST'))
 def create_sheet():
@@ -183,19 +196,21 @@ def view_sheet(uuid):
     #sheet['title'] = "Redhook"
     #sheet['description'] = 'Woodenville'
     #sheet['event'] = "SeattleBeer"
-    return render_template('view_sheet.html', sheet=sheet) 
+    req = "https://image.maps.cit.api.here.com/mia/1.6/mapview?app_id="+HERE_ID+"&app_code="+HERE_CODE+"&c=52.431,13.3845&z=16"
+    resp = requests.post(req)
+    return render_template('view_sheet.html', sheet=sheet, HERE_CODE=HERE_CODE, HERE_ID=HERE_ID, resp=resp, req=req) 
 
 
 #Simulator Route
 @app.route('/simulate')
 def simulate():
-        simulate_sheets()
-        simulate_scans()
-    
+    simulate_sheets()
+    simulate_scans()
+    return "hey"
     
 
 def simulate_sheets():
-    return
+    # return
     for i in range(25):
         print("making sheet")
         sheet = Sheet()
@@ -203,6 +218,8 @@ def simulate_sheets():
         sheet.description = fake.address()
         sheet.event = fake.safe_color_name()
         sheet.uuid = shortuuid.uuid()
+        sheet.lat = random.randint(1,100)
+        sheet.lon = random.randint(1,100)
         sheet.save()
    
 def simulate_scans():
