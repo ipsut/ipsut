@@ -3,19 +3,17 @@ from wtforms import StringField
 from wtforms.validators import DataRequired
 from flask import render_template, request, redirect, url_for, make_response
 from flask_wtf.csrf import CSRFProtect
-
+from faker import Factory
 from flask import Flask
 from flask.ext.qrcode import QRcode
 from peewee import *
-
-from flask_peewee.db import Database
-
-
-
-
-
 import shortuuid
+from flask_peewee.db import Database
+import random
 
+
+
+fake = Factory.create()
 
 DEBUG = True
 BASE_URL = 'http://127.0.0.1:5000'
@@ -131,7 +129,43 @@ def view_sheet(uuid):
     #sheet['event'] = "SeattleBeer"
     return render_template('view_sheet.html', sheet=sheet) 
 
+@app.route('/simulate')
+def simulate():
+        simulate_sheets()
+        simulate_scans()
+    
+    
+#Simulator
+def simulate_sheets():
+    return
+    for i in range(25):
+        print("making sheet")
+        sheet = Sheet()
+        sheet.name = fake.company()
+        sheet.description = fake.address()
+        sheet.event = fake.safe_color_name()
+        sheet.uuid = shortuuid.uuid()
+        sheet.save()
+   
+def simulate_scans():
+    for i in range(25):
+        number = random.randint(1,10)
+        username = fake.name()
+        print(username)
+        sheets = Sheet.select().order_by(fn.Random()).limit(number)
+        for sheet in sheets:
+            print(" scan")
+            scan = Scan()
+            scan.sheet = sheet
+            scan.username = username
+            scan.save()
+            
 
+            
+    
+        
+        
+    
  
 if __name__ == '__main__':
 
