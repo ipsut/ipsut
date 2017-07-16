@@ -64,7 +64,7 @@ class SigninForm(FlaskForm):
 #User Routes
 @app.route('/')
 def home():
-    eventList = Sheet.select(Sheet.event).distinct().select(Sheet.name, Sheet.description)
+    eventList = Sheet.select(Sheet.event).distinct()
     return render_template('index.html', eventList=eventList)
 
 @app.route('/signin', methods=('GET', 'POST'))
