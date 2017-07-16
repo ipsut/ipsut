@@ -5,12 +5,12 @@
 <table>
 <thead><tr><th>Sheet Name</th><th>Sheet ID</th></tr></thead>
 <tbody>
-	<tr>
+	
 
 {% for sheet in sheets %}
-    <td><a href="/sheet/{{sheet.uuid}}">{{sheet.name}}</a></td><td>{{sheet.uuid}}</td>
+    <tr><td><a href="/sheet/{{sheet.uuid}}">{{sheet.name}}</a></td><td>{{sheet.uuid}}</td></tr>
 {% endfor %}
-	</tr>
+	
 </tbody>
 </table>
 {% endblock %}

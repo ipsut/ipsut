@@ -1,13 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-{% for event in events %}
 <h2>Event List</h2>
    <section>
+
+{% for event in events %}
+
 <h3><span class="icon fa-flag"></span> <a href="/event_sheet/{{ event.event }}">{{ event.event }}</a></h3>
 
-									</section>
 {% endfor %}
+	</section>
 
 {% endblock %}
