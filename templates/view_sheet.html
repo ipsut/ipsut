@@ -13,10 +13,12 @@
 <div id="sheetInfo">
 	<p>{{sheet.description}}</p>
 	<p>{{sheet.event}}</p>
+	{% if (sheet.lat) and (sheet.lon) %}
 	<p>Longitude: {{sheet.lon}}, Lattitude {{sheet.lat}}</p>
+	<img id="map" src="{{ req }}"></img>
+	{% endif %}
 	<p></p>
 </div>
-<img id="map" src="{{ req }}"></img>
-
+<div id="botBar">&nbsp;</div>
 
 {% endblock %}

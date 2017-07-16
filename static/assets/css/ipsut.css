@@ -15,3 +15,12 @@
 #adminOnly{
 	float:right;
 }
+#adminOnly::after{
+	clear:both;
+}
+#botBar{
+	clear:both;
+}
+.inner{
+	clear:both !important;
+}
