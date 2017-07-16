@@ -37,10 +37,10 @@
 							<a href="#" class="image"><img src="images/pic01.jpg" alt="" data-position="center center" /></a>
 							<div class="content">
 								<div class="inner">
-									<h2>Sed ipsum dolor</h2>
-									<p>You can't transmit the malware without calculating the ethernet RAM network!</p>
+									<h2>Host a Part of the Treasure Hunt!</h2>
+									<p>You can add a point on the hunt right here!</p>
 									<ul class="actions">
-										<li><a href="#" class="button">Learn more</a></li>
+										<li><a href="/create_sheet" class="button">Create Sheet</a></li>
 									</ul>
 								</div>
 							</div>
@@ -52,7 +52,7 @@
 									<h2>Feugiat consequat</h2>
 									<p>The CPU transmitter is down, back up the redundant virus so we can reboot the BIOS network!</p>
 									<ul class="actions">
-										<li><a href="#" class="button">Learn more</a></li>
+										<li><a href="/scans" class="button">Learn more</a></li>
 									</ul>
 								</div>
 							</div>
@@ -81,9 +81,8 @@
 
 								{% for event in eventList %}
 									<section>
-										<span class="icon major fa-flag"></span>
-										<h3><a href="/event_sheet/{{ event.event }}">{{ event.name }}</a></h3>
-										<p>{{ event.description }}</p>
+<h3><span class="icon fa-flag"></span> <a href="/event_sheet/{{ event.event }}">{{ event.event }}</a></h3>
+
 									</section>
 								{% endfor %}
 
@@ -97,7 +96,7 @@
 							<h2>Leaderboard</h2>
 							<table>
 								<thead>
-									<tr><td>Name</td><td>Points</td></tr>
+									<tr><th>Name</th><th>Points</th></tr>
 								</thead>
 								<tbody>
 								{% for leader in leaderBoard %}

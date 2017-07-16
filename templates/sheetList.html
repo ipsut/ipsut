@@ -1,3 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>All Sheets</h2>
+<table>
+<thead><tr><th>Sheet Name</th><th>Sheet ID</th></tr></thead>
+<tbody>
+	<tr>
+
 {% for sheet in sheets %}
-    {{sheet.name}}
+    <td><a href="/sheet/{{sheet.uuid}}">{{sheet.name}}</a></td><td>{{sheet.uuid}}</td>
 {% endfor %}
+	</tr>
+</tbody>
+</table>
+{% endblock %}
