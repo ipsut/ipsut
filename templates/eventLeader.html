@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>{{event_name}} Event Leaderboard</h2>
+
+					<section id="three" class="wrapper style2 fade-up">
+						<div class="inner">
+							<h2>Leaderboard</h2>
+							<table>
+								<thead>
+									<tr><th>Name</th><th>Points</th></tr>
+								</thead>
+								<tbody>
+								{% for leader in leaders %}
+									<tr><td>{{ leader.username }}</td><td>{{ leader.count }}</td></tr>
+								{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</section>
+
+
+
+
+
+{% endblock %}
