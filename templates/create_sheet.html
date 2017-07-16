@@ -2,7 +2,10 @@
 
 {% block content %}
 <h2>Create New Sheet</h2>
-<p>This will generate 
+<p>This will generate a new point/location of the scavenger hunt of the listed event.</p>
+
+<p>Currently we only allow QR codes to be generated, and you must list your specific Event, like "seattlebeer".</p>
+
     <form method="POST" action="/create_sheet">
         {{ form.csrf_token }}
         
