@@ -83,6 +83,12 @@ def list_event():
     events = Sheet.select(Sheet.event).distinct()
     return render_template('eventList.html', events=events)
 
+#Event Routes 
+@app.route('/event/<name>')
+def view_event(name):
+    sheets = Sheet.select().where(Sheet.event == name)
+    return render_template('event.html', event_name=name, sheets=sheets)
+
 #Scan Routes 
 @app.route('/scans')
 def list_scans():

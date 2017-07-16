@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Sheets for the {{event_name}} Event</h2>
+   <section>
+
+{% for sheet in sheets %}
+
+<h3><span class="icon fa-flag"></span> <a href="/sheet/{{sheet.uuid}}">{{sheet.name}}</a></h3>
+
+{% endfor %}
+	</section>
+
+{% endblock %}
