@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Your Scans!</h2>
+
+<table>
+<thead><tr><th>Scan</th><th>Event</th></tr></thead>
+<tbody>
+	
+
+{% for scan in scans %}
+    <tr>
+        <td>{{scan.name}}</td> <td><a href="/event/{{scan.event}}">{{scan.event}}</a></td>
+    </tr>
+{% endfor %}
+
+</tbody>
+</table>
+{% endblock %}
