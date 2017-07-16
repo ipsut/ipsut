@@ -81,7 +81,7 @@
 
 								{% for event in eventList %}
 									<section>
-<h3><span class="icon fa-flag"></span> <a href="/event_sheet/{{ event.event }}">{{ event.event }}</a></h3>
+<h3><span class="icon fa-flag"></span> <a href="/event/{{ event.event }}">{{ event.event }}</a></h3>
 
 									</section>
 								{% endfor %}
@@ -99,8 +99,8 @@
 									<tr><th>Name</th><th>Points</th></tr>
 								</thead>
 								<tbody>
-								{% for leader in leaderBoard %}
-									<tr><td>{{ leader.name }}</td><td>{{ leader.points }}</td></tr>
+								{% for leader in leaderboard %}
+									<tr><td>{{ leader.username }}</td><td>{{ leader.count }}</td></tr>
 								{% endfor %}
 								</tbody>
 							</table>

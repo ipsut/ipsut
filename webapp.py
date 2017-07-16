@@ -62,10 +62,35 @@ class SigninForm(FlaskForm):
 
 
 #User Routes
+
+#Leaderboard Route
+@app.route('/leaderboard')
+def leaderboard():
+        leaders = []
+        users = Scan.select(Scan.username).distinct()
+        for user in users:
+            leader = {}
+            leader['username'] = user.username
+            leader['count'] = Scan.select().where(Scan.username == user.username).count()
+            leaders.append(leader)
+        leaders = sorted(leaders, key=lambda k: k['count'], reverse=True)
+        # return "leaders"
+        for leader in leaders:
+            print(leader)
+        # return ">>>"
+
 @app.route('/')
 def home():
     eventList = Sheet.select(Sheet.event).distinct()
-    return render_template('index.html', eventList=eventList)
+    leaders = []
+    users = Scan.select(Scan.username).distinct()
+    for user in users:
+        leader = {}
+        leader['username'] = user.username
+        leader['count'] = Scan.select().where(Scan.username == user.username).count()
+        leaders.append(leader)
+    leaders = sorted(leaders, key=lambda k: k['count'], reverse=True)
+    return render_template('index.html', eventList=eventList, leaderboard = leaders)
 
 @app.route('/signin', methods=('GET', 'POST'))
 def signin():
@@ -174,20 +199,7 @@ def simulate_scans():
             scan.save()
             
 
-#Leaderboard Route
-@app.route('/leaderboard')
-def leaderboard():
-        leaders = []
-        users = Scan.select(Scan.username).distinct()
-        for user in users:
-            leader = {}
-            leader['username'] = user.username
-            leader['count'] = Scan.select().where(Scan.username == user.username).count()
-            leaders.append(leader)
-        leaders = sorted(leaders, key=lambda k: k['count'], reverse=True)
-        for leader in leaders:
-            print(leader)
-        return ">>>"
+
     
         
         

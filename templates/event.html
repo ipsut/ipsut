@@ -2,13 +2,18 @@
 
 {% block content %}
 <h2>Sheets for the {{event_name}} Event</h2>
-   <section>
 
+<table>
+<thead><tr><th>Sheet Name</th><th>Sheet Description</th></tr></thead>
+<tbody>
 {% for sheet in sheets %}
 
-<h3><span class="icon fa-flag"></span> <a href="/sheet/{{sheet.uuid}}">{{sheet.name}}</a></h3>
+<tr>
+	<td><a href="/sheet/{{sheet.uuid}}">{{sheet.name}}</a></td><td>{{ sheet.description }}</td>
+</tr>
 
 {% endfor %}
-	</section>
+	</tbody>
+	</table>
 
 {% endblock %}
