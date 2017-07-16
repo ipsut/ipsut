@@ -10,9 +10,11 @@ from peewee import *
 import shortuuid
 from flask_peewee.db import Database
 import random
+import datetime
 
 
-
+expire_date = datetime.datetime.now()
+expire_date = expire_date + datetime.timedelta(days=90)
 fake = Factory.create()
 
 DEBUG = True
@@ -116,7 +118,7 @@ def signin():
     if form.validate_on_submit():
         resp = make_response(redirect(url_for('create_sheet')))
         print(form.name.data)
-        resp.set_cookie('username', form.name.data)
+        resp.set_cookie('username', form.name.data, expires=expire_date)
         return resp
     return render_template('signin.html', form=form)
 
@@ -193,7 +195,7 @@ def simulate():
     
 
 def simulate_sheets():
-
+    return
     for i in range(25):
         print("making sheet")
         sheet = Sheet()
