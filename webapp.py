@@ -44,6 +44,7 @@ class Sheet(db.Model):
 class Scan(db.Model):
     sheet = ForeignKeyField(Sheet)
     username = TextField()
+    event = TextField()
 
 
 
@@ -63,7 +64,24 @@ class SigninForm(FlaskForm):
 
 #User Routes
 
+
+
 #Leaderboard Route
+@app.route('/event_leaderboard/<event>')
+def event_leaderboard(event):
+        leaders = []
+        users = Scan.select(Scan.username).distinct()
+        for user in users:
+            leader = {}
+            leader['username'] = user.username
+            leader['count'] = Scan.select().where(Scan.username == user.username, Scan.event==event).count()
+            leaders.append(leader)
+        leaders = sorted(leaders, key=lambda k: k['count'], reverse=True)
+
+        for leader in leaders:
+            print(leader)
+        return render_template('eventLeader.html', leaders=leaders, event_name=event) 
+        
 @app.route('/leaderboard')
 def leaderboard():
         leaders = []
@@ -118,7 +136,6 @@ def view_event(name):
 @app.route('/scans')
 def list_scans():
     scans = Scan.select()
-    print(scans)
     return render_template('scanList.html', scans=scans)
 
 @app.route('/s/<uuid>')
@@ -127,6 +144,7 @@ def scan(uuid):
     scan = Scan()
     scan.sheet = sheet
     scan.username = request.cookies.get('username')
+    scan.event = sheet.event
     scan.save()
     return "Thanks for checking in"
 
@@ -175,7 +193,7 @@ def simulate():
     
 
 def simulate_sheets():
-    return
+
     for i in range(25):
         print("making sheet")
         sheet = Sheet()
@@ -196,6 +214,7 @@ def simulate_scans():
             scan = Scan()
             scan.sheet = sheet
             scan.username = username
+            scan.event = sheet.event
             scan.save()
             
 
