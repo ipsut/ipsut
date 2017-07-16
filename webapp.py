@@ -129,13 +129,15 @@ def view_sheet(uuid):
     #sheet['event'] = "SeattleBeer"
     return render_template('view_sheet.html', sheet=sheet) 
 
+
+#Simulator Route
 @app.route('/simulate')
 def simulate():
         simulate_sheets()
         simulate_scans()
     
     
-#Simulator
+
 def simulate_sheets():
     return
     for i in range(25):
@@ -161,7 +163,20 @@ def simulate_scans():
             scan.save()
             
 
-            
+#Leaderboard Route
+@app.route('/leaderboard')
+def leaderboard():
+        leaders = []
+        users = Scan.select(Scan.username).distinct()
+        for user in users:
+            leader = {}
+            leader['username'] = user.username
+            leader['count'] = Scan.select().where(Scan.username == user.username).count()
+            leaders.append(leader)
+        leaders = sorted(leaders, key=lambda k: k['count'], reverse=True)
+        for leader in leaders:
+            print(leader)
+        return ">>>"
     
         
         
