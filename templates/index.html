@@ -78,11 +78,12 @@
 							<blockquote>Ladies & Gentleman: Start Your Mobiles!</blockquote>
 							<p>A live list of scavanger hunts available. Happy hunting.</p>
 							<div id="eventList">
+
 								{% for event in eventList %}
 									<section>
 										<span class="icon major fa-flag"></span>
-										<h3><a href="/event_sheet/{{ event.eventId }}">{{ event.title }}</a></h3>
-										<p>{{ event.desc }}</p>
+										<h3><a href="/event_sheet/{{ event.event }}">{{ event.name }}</a></h3>
+										<p>{{ event.description }}</p>
 									</section>
 								{% endfor %}
 
